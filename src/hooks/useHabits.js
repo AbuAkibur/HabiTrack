@@ -69,6 +69,10 @@ export function useHabits() {
     }))
   }, [])
 
+  const reorderHabits = useCallback((newOrder) => {
+    setHabits(newOrder)
+  }, [])
+
   const isCompletedToday = useCallback((habit) => {
     return !!habit.completions[TODAY()]
   }, [])
@@ -102,6 +106,7 @@ export function useHabits() {
     editHabit,
     deleteHabit,
     toggleHabit,
+    reorderHabits,
     isCompletedToday,
     getWeeklyData,
     todayStats,

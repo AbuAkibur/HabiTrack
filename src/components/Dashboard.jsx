@@ -1,34 +1,34 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useHabitsContext } from "../context/HabitsContext";
-import HabitCard from "./HabitCard";
-import MotivationBanner from "./MotivationBanner";
-import FilterBar from "./FilterBar";
-import EmptyState from "./EmptyState";
-import FAB from "./FAB";
-import HabitModal from "./HabitModal";
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useHabitsContext } from '../context/HabitsContext'
+import HabitCard from './HabitCard'
+import MotivationBanner from './MotivationBanner'
+import FilterBar from './FilterBar'
+import EmptyState from './EmptyState'
+import FAB from './FAB'
+import HabitModal from './HabitModal'
 
 export default function Dashboard() {
-  const { habits, isCompletedToday } = useHabitsContext();
-  const [filter, setFilter] = useState("all");
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingHabit, setEditingHabit] = useState(null);
+  const { habits, isCompletedToday } = useHabitsContext()
+  const [filter, setFilter] = useState('all')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [editingHabit, setEditingHabit] = useState(null)
 
-  const filtered = habits.filter((h) => {
-    if (filter === "done") return isCompletedToday(h);
-    if (filter === "pending") return !isCompletedToday(h);
-    return true;
-  });
+  const filtered = habits.filter(h => {
+    if (filter === 'done') return isCompletedToday(h)
+    if (filter === 'pending') return !isCompletedToday(h)
+    return true
+  })
 
   const openAdd = () => {
-    setEditingHabit(null);
-    setModalOpen(true);
-  };
+    setEditingHabit(null)
+    setModalOpen(true)
+  }
 
   const openEdit = (habit) => {
-    setEditingHabit(habit);
-    setModalOpen(true);
-  };
+    setEditingHabit(habit)
+    setModalOpen(true)
+  }
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-5 pb-24 font-nunito">
@@ -40,7 +40,7 @@ export default function Dashboard() {
             Today's Habits
           </h2>
           <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">
-            {habits.length} habit{habits.length !== 1 ? "s" : ""}
+            {habits.length} habit{habits.length !== 1 ? 's' : ''}
           </span>
         </div>
 
@@ -50,7 +50,10 @@ export default function Dashboard() {
           {filtered.length === 0 ? (
             <EmptyState key="empty" filter={filter} onAdd={openAdd} />
           ) : (
-            <motion.div key="list" className="flex flex-col gap-3">
+            <motion.div
+              key="list"
+              className="flex flex-col gap-3"
+            >
               <AnimatePresence mode="popLayout">
                 {filtered.map((habit, i) => (
                   <HabitCard
@@ -74,5 +77,5 @@ export default function Dashboard() {
         editHabit={editingHabit}
       />
     </div>
-  );
+  )
 }
