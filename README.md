@@ -1,16 +1,33 @@
-# React + Vite
+# 🔥 Habitrack — Build Better Habits
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A beautiful mobile-first habit tracker built with React 19 + Vite 8 + Tailwind CSS + Framer Motion.
 
-Currently, two official plugins are available:
+## Demo Credentials
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Default Login Email:** `admin@habitrack.com`  
+**Default Password:** `12345`  
+**Default OTP:** `12345`
 
-## React Compiler
+Write them below the credentials as requested.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features
 
-## Expanding the ESLint configuration
+- Daily habit tracking with one-tap check-in
+- Automatic streak calculation + best streak memory
+- Weekly progress bar chart for each habit
+- Circular weekly completion ring
+- Add, Edit, Delete habits with emoji icons and colors
+- Filter: All / Pending / Done
+- Motivational banner with daily progress
+- Dark / Light mode (saved in localStorage)
+- Fully persistent with localStorage
+- Smooth Framer Motion animations
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**All rights reserved by abuakibur@gmail.com, 2026**
+
+## 🚀 Getting Started
+
+```bash
+npm install
+npm run dev
+```
