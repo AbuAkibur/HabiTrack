@@ -28,13 +28,12 @@ export default function WeeklyChart({ habit }) {
               initial={{ scaleY: 0 }}
               animate={{ scaleY: 1 }}
               transition={{ delay: i * 0.05, duration: 0.3, ease: "easeOut" }}
-              style={{ transformOrigin: "bottom" }}
               className={`w-full rounded-t-md ${
                 day.completed ? color.dot : "bg-gray-200 dark:bg-gray-700"
               } ${day.isToday ? "ring-2 ring-offset-1 " + color.ring : ""}`}
               style={{
-                height: day.completed ? "24px" : "12px",
                 transformOrigin: "bottom",
+                height: day.completed ? "24px" : "12px",
                 transition: "height 0.3s ease",
               }}
             />
