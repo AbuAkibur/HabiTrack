@@ -1,29 +1,41 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { MoreVertical, Pencil, Trash2, Check, ChevronDown, ChevronUp } from 'lucide-react'
-import { useHabitsContext } from '../context/HabitsContext'
-import { getColor } from '../utils/colors'
-import CircularProgress from './CircularProgress'
-import WeeklyChart from './WeeklyChart'
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  MoreVertical,
+  Pencil,
+  Trash2,
+  Check,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import { useHabitsContext } from "../context/HabitsContext";
+import { getColor } from "../utils/colors";
+import CircularProgress from "./CircularProgress";
+import WeeklyChart from "./WeeklyChart";
 
 export default function HabitCard({ habit, onEdit, index }) {
-  const { toggleHabit, deleteHabit, isCompletedToday, getWeeklyData } = useHabitsContext()
-  const [expanded, setExpanded] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [justCompleted, setJustCompleted] = useState(false)
+  const { toggleHabit, deleteHabit, isCompletedToday, getWeeklyData } =
+    useHabitsContext();
+  const [expanded, setExpanded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [justCompleted, setJustCompleted] = useState(false);
 
-  const color = getColor(habit.color)
-  const completed = isCompletedToday(habit)
-  const days = getWeeklyData(habit)
-  const weeklyPct = Math.round((days.filter(d => d.completed).length / 7) * 100)
+  const color = getColor(habit.color);
+  const completed = isCompletedToday(habit);
+  const days = getWeeklyData(habit);
+  const weeklyPct = Math.round(
+    (days.filter((d) => d.completed).length / 7) * 100,
+  );
 
   const handleToggle = () => {
     if (!completed) {
-      setJustCompleted(true)
-      setTimeout(() => setJustCompleted(false), 600)
+      setJustCompleted(true);
+      setTimeout(() => setJustCompleted(false), 600);
     }
-    toggleHabit(habit.id)
-  }
+    toggleHabit(habit.id);
+  };
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <motion.div
@@ -31,12 +43,12 @@ export default function HabitCard({ habit, onEdit, index }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ delay: index * 0.06, duration: 0.35, ease: 'easeOut' }}
+      transition={{ delay: index * 0.06, duration: 0.35, ease: "easeOut" }}
       whileHover={{ y: -2 }}
       className={`rounded-2xl p-4 border ${
         completed
           ? `${color.bg} ${color.bgDark} border-transparent`
-          : 'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800'
+          : "bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800"
       } card-shadow dark:card-shadow-dark relative overflow-hidden`}
     >
       {/* Celebration burst */}
@@ -54,7 +66,10 @@ export default function HabitCard({ habit, onEdit, index }) {
 
       <div className="flex items-start gap-3">
         {/* Icon + progress ring */}
-        <div className="relative shrink-0 cursor-pointer" onClick={() => setExpanded(e => !e)}>
+        <div
+          className="relative shrink-0 cursor-pointer"
+          onClick={() => setExpanded((e) => !e)}
+        >
           <CircularProgress
             percentage={weeklyPct}
             color={color.hex}
@@ -69,9 +84,11 @@ export default function HabitCard({ habit, onEdit, index }) {
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h3 className={`font-bold text-base truncate ${
-              completed ? color.text : 'text-gray-800 dark:text-gray-100'
-            }`}>
+            <h3
+              className={`font-bold text-base truncate ${
+                completed ? color.text : "text-gray-800 dark:text-gray-100"
+              }`}
+            >
               {habit.name}
             </h3>
 
@@ -79,7 +96,7 @@ export default function HabitCard({ habit, onEdit, index }) {
             <div className="relative shrink-0">
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setMenuOpen(m => !m)}
+                onClick={() => setMenuOpen((m) => !m)}
                 className="p-1 rounded-lg text-gray-400 dark:text-gray-500 hover:bg-black/5 dark:hover:bg-white/10"
               >
                 <MoreVertical size={16} />
@@ -93,16 +110,21 @@ export default function HabitCard({ habit, onEdit, index }) {
                     exit={{ opacity: 0, scale: 0.9, y: -4 }}
                     transition={{ duration: 0.15 }}
                     className="absolute right-0 top-7 z-50 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden w-32"
-                    onMouseLeave={() => setMenuOpen(false)}
                   >
                     <button
-                      onClick={() => { setMenuOpen(false); onEdit(habit) }}
+                      onClick={() => {
+                        closeMenu();
+                        onEdit(habit);
+                      }}
                       className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
                     >
                       <Pencil size={14} /> Edit
                     </button>
                     <button
-                      onClick={() => { setMenuOpen(false); deleteHabit(habit.id) }}
+                      onClick={() => {
+                        closeMenu();
+                        deleteHabit(habit.id);
+                      }}
                       className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                     >
                       <Trash2 size={14} /> Delete
@@ -143,7 +165,7 @@ export default function HabitCard({ habit, onEdit, index }) {
           className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all ${
             completed
               ? `${color.dot} text-white shadow-md`
-              : 'border-2 border-gray-200 dark:border-gray-700 text-transparent hover:border-orange-300'
+              : "border-2 border-gray-200 dark:border-gray-700 text-transparent hover:border-orange-300"
           }`}
         >
           <AnimatePresence mode="wait">
@@ -153,12 +175,15 @@ export default function HabitCard({ habit, onEdit, index }) {
                 initial={{ scale: 0, rotate: -20 }}
                 animate={{ scale: 1, rotate: 0 }}
                 exit={{ scale: 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
               >
                 <Check size={18} strokeWidth={3} />
               </motion.div>
             ) : (
-              <motion.div key="empty" className="w-3 h-3 rounded-full bg-gray-200 dark:bg-gray-700" />
+              <motion.div
+                key="empty"
+                className="w-3 h-3 rounded-full bg-gray-200 dark:bg-gray-700"
+              />
             )}
           </AnimatePresence>
         </motion.button>
@@ -166,7 +191,7 @@ export default function HabitCard({ habit, onEdit, index }) {
 
       {/* Expand/collapse weekly chart */}
       <button
-        onClick={() => setExpanded(e => !e)}
+        onClick={() => setExpanded((e) => !e)}
         className="mt-2 w-full flex items-center justify-center gap-1 text-xs font-semibold text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
       >
         {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -176,15 +201,15 @@ export default function HabitCard({ habit, onEdit, index }) {
         {expanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            style={{ overflow: 'hidden' }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            style={{ overflow: "hidden" }}
           >
             <WeeklyChart habit={habit} />
           </motion.div>
         )}
       </AnimatePresence>
     </motion.div>
-  )
+  );
 }
