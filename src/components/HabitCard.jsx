@@ -12,6 +12,7 @@ import { useHabitsContext } from "../context/HabitsContext";
 import { getColor } from "../utils/colors";
 import CircularProgress from "./CircularProgress";
 import WeeklyChart from "./WeeklyChart";
+import Portal from "./Portal"; // ← NEW
 
 export default function HabitCard({ habit, onEdit, index }) {
   const { toggleHabit, deleteHabit, isCompletedToday, getWeeklyData } =
@@ -92,7 +93,7 @@ export default function HabitCard({ habit, onEdit, index }) {
               {habit.name}
             </h3>
 
-            {/* Menu - FIXED with higher z-index */}
+            {/* Menu Button */}
             <div className="relative shrink-0">
               <motion.button
                 whileTap={{ scale: 0.9 }}
@@ -102,35 +103,43 @@ export default function HabitCard({ habit, onEdit, index }) {
                 <MoreVertical size={16} />
               </motion.button>
 
+              {/* Floating Menu using Portal */}
               <AnimatePresence>
                 {menuOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: -4 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: -4 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-7 z-[60] bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden w-32"
-                    // z-[60] ensures it stays above HabitModal (z-50)
-                  >
-                    <button
-                      onClick={() => {
-                        closeMenu();
-                        onEdit(habit);
+                  <Portal>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9, y: -4 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: -4 }}
+                      transition={{ duration: 0.15 }}
+                      className="fixed z-[100] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-100 dark:border-gray-700 overflow-hidden w-40"
+                      style={{
+                        top: "auto",
+                        left: "auto",
+                        right: "20px",
+                        top: "180px", // Adjust if needed after testing
                       }}
-                      className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
                     >
-                      <Pencil size={14} /> Edit
-                    </button>
-                    <button
-                      onClick={() => {
-                        closeMenu();
-                        deleteHabit(habit.id);
-                      }}
-                      className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                    >
-                      <Trash2 size={14} /> Delete
-                    </button>
-                  </motion.div>
+                      <button
+                        onClick={() => {
+                          closeMenu();
+                          onEdit(habit);
+                        }}
+                        className="flex items-center gap-3 w-full px-5 py-3.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors border-b border-gray-100 dark:border-gray-700"
+                      >
+                        <Pencil size={16} /> Edit Habit
+                      </button>
+                      <button
+                        onClick={() => {
+                          closeMenu();
+                          deleteHabit(habit.id);
+                        }}
+                        className="flex items-center gap-3 w-full px-5 py-3.5 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                      >
+                        <Trash2 size={16} /> Delete Habit
+                      </button>
+                    </motion.div>
+                  </Portal>
                 )}
               </AnimatePresence>
             </div>
@@ -190,7 +199,7 @@ export default function HabitCard({ habit, onEdit, index }) {
         </motion.button>
       </div>
 
-      {/* Expand/collapse weekly chart */}
+      {/* Expand/collapse */}
       <button
         onClick={() => setExpanded((e) => !e)}
         className="mt-2 w-full flex items-center justify-center gap-1 text-xs font-semibold text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
