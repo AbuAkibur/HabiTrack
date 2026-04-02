@@ -39,7 +39,7 @@ export default function HabitCard({ habit, onEdit, index }) {
         completed
           ? `${color.bg} ${color.bgDark} border-transparent`
           : 'bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800'
-      } card-shadow dark:card-shadow-dark relative overflow-visible`}   {/* overflow-visible important */}
+      } card-shadow dark:card-shadow-dark relative overflow-visible`}
     >
       {/* Celebration burst */}
       <AnimatePresence>
@@ -77,7 +77,7 @@ export default function HabitCard({ habit, onEdit, index }) {
               {habit.name}
             </h3>
 
-            {/* Menu - Fixed & Clean */}
+            {/* Edit / Delete Menu */}
             <div className="relative shrink-0 z-10">
               <motion.button
                 whileTap={{ scale: 0.9 }}
