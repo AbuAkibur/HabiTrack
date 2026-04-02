@@ -92,7 +92,7 @@ export default function HabitCard({ habit, onEdit, index }) {
               {habit.name}
             </h3>
 
-            {/* Menu */}
+            {/* Menu - FIXED with higher z-index */}
             <div className="relative shrink-0">
               <motion.button
                 whileTap={{ scale: 0.9 }}
@@ -109,7 +109,8 @@ export default function HabitCard({ habit, onEdit, index }) {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -4 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-7 z-50 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden w-32"
+                    className="absolute right-0 top-7 z-[60] bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden w-32"
+                    // z-[60] ensures it stays above HabitModal (z-50)
                   >
                     <button
                       onClick={() => {
