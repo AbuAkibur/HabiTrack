@@ -77,5 +77,7 @@ export default function Dashboard() {
         editHabit={editingHabit}
       />
     </div>
+
+    
   )
 }
